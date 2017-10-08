@@ -1,4 +1,4 @@
-class Repository {
+class Model {
   /**
     * Возвращает список всех объектов
     * @returns {Promise.<void>}
@@ -24,4 +24,4 @@ class Repository {
     */
   async remove(id) {}
 }
-module.exports = Repository;
+module.exports = Model;

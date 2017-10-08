@@ -1,10 +1,10 @@
 const fs = require('fs');
 const path = require('path');
 
-const Repository = require('./repository');
+const Model = require('./model');
 const ApplicationError = require('../../../libs/application-error');
 
-class FileRepository extends Repository {
+class FileModel extends Model {
   constructor(sourceFileName) {
     super();
     this.dataSourceFile = path.join(__dirname, '..', '..', 'data', sourceFileName);
@@ -18,8 +18,15 @@ class FileRepository extends Repository {
           if (err) {
             return reject(err);
           }
+
+          let fileData = '[]';
+
+          if (data.toString('utf8')) {
+            fileData = data;
+          }
+
           try {
-            this.dataSource = JSON.parse(data);
+            this.dataSource = JSON.parse(fileData);
             return resolve();
           } catch (error) {
             return reject(error);
@@ -31,7 +38,7 @@ class FileRepository extends Repository {
   }
 
   async getAll() {
-    return this.loadFile();
+    return this.dataSource;
   }
 
   async get(id) {
@@ -44,7 +51,8 @@ class FileRepository extends Repository {
     * @private
     */
   generateId() {
-    return this.dataSource.reduce((max, item) => Math.max(max, item.id), 0) + 1;
+    return this.dataSource.length ?
+      this.dataSource.reduce((max, item) => Math.max(max, item.id), 0) + 1 : 0;
   }
 
   /**
@@ -66,4 +74,4 @@ class FileRepository extends Repository {
   }
 }
 
-module.exports = FileRepository;
+module.exports = FileModel;

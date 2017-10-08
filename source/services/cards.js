@@ -1,11 +1,11 @@
 module.exports = (cardRepository) => {
   const getCards = () => (cardRepository.getAll());
-  const createCard = (cardNumber, balance) => {
+  const createCard = card => (cardRepository.add(card));
+  const deleteCard = id => (cardRepository.remove(id));
 
-    return cardRepository.create(cardNumber, balance)
-  };
   return {
     getCards,
     createCard,
+    deleteCard,
   };
 };
