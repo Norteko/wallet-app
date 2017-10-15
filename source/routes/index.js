@@ -1,6 +1,7 @@
 
-const { getCards, createCard, deleteCard } = require('./cards');
-// const { getTransactions, createTransactions } = require('./transactions');
+const { getCards, createCard, deleteCard } = require('./cardsRoutes');
+const { getCardTransactions, createTransaction, getTransactions } = require('./transactionsRoutes');
+const { pay, fill } = require('./paymentsRoutes');
 const error = require('./errors');
 
 module.exports = (service, router) => {
@@ -11,8 +12,15 @@ module.exports = (service, router) => {
   router.post('/cards/', createCard(service));
   router.delete('/cards/:id', deleteCard(service));
 
-  //router.get('/cards/:id/transactions/', getTransactions(service));
-  //router.post('/cards/:id/transactions/', createTransactions(service));
+  router.get('/cards/:id/transactions/', getCardTransactions(service));
+  router.post('/cards/:id/transactions/', createTransaction(service));
+
+  router.post('/cards/:id/pay', pay(service));
+  // router.post('/cards/:id/transfer', transfer(service));
+  router.post('/cards/:id/fill', fill(service));
+
+  router.get('/transactions/', getTransactions(service));
+
 
   router.all('/error', error(service));
 

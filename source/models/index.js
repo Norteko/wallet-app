@@ -4,12 +4,13 @@ const FileTransaction = require('./fileModels/transaction.js');
 
 async function initFileModels() {
   const card = new FileCard();
-  // const transaction = new fileTransaction(); 
+  const transaction = new FileTransaction(); 
   await card.loadFile();
+  await transaction.loadFile();
   console.log('Модели проинициализированы');
   return {
     card,
-    //transaction,
+    transaction,
   };
 }
 
@@ -20,7 +21,7 @@ module.exports = async (source) => {
       initializedModels = await initFileModels();
       break;
     default:
-      throw new Error('не указана вид источника модели');
+      throw new Error('не указан вид источника модели');
   }
 
   return initializedModels;

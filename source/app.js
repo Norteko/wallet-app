@@ -17,8 +17,8 @@ const ApplicationError = require('../libs/application-error');
 
 async function start() {
   const appModels = await models(modelConfig.fileSource);
-  const appRepositories = await repositories(appModels);
-  const appService = await services(appRepositories);
+  const appRepositories = await repositories(appModels, ApplicationError);
+  const appService = await services(appRepositories, ApplicationError);
   const appRouter = await routes(appService, router);
 
   const app = new Koa();

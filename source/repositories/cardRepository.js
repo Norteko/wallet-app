@@ -14,6 +14,11 @@ module.exports = (cardModel) => {
     return allCards;
   }
 
+  async function update(card) {
+    const updatedCard = await cardModel.update(card);
+    return updatedCard;
+  }
+
   async function getByCardNumber(cardNumber) {
     const cards = await getAll();
     let foundCard;
@@ -26,11 +31,25 @@ module.exports = (cardModel) => {
     return foundCard;
   }
 
+  async function getById(id) {
+    const cards = await getAll();
+    console.log(11, id, cards);
+    let foundCard;
+    cards.forEach((card) => {
+      if (card.id === id) {
+        foundCard = card;
+      }
+    });
+    return foundCard;
+  }
+
   const cardRepository = {
     getAll,
     add,
+    update,
     remove,
     getByCardNumber,
+    getById,
   };
 
   return cardRepository;

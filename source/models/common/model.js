@@ -17,6 +17,9 @@ class Model {
   * @returns {Promise.<void>}
   */
   async create() {}
+
+  async update() {}
+  
   /**
     *
     * @param {Number} id Идентификатор записи для удаления
