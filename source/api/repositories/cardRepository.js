@@ -14,12 +14,16 @@ module.exports = (cardModel) => {
     return allCards;
   }
 
-  async function update(card) {
-    const updatedCard = await cardModel.update(card);
+  async function update(card, updatedData) {
+    const updatedCard = await cardModel.update(card, updatedData);
     return updatedCard;
   }
 
   async function getByCardNumber(cardNumber) {
+    if (cardModel.getBy !== undefined) {
+      return cardModel.getBy({cardNumber});
+    }
+
     const cards = await getAll();
     let foundCard;
     cards.forEach((card) => {
@@ -32,8 +36,11 @@ module.exports = (cardModel) => {
   }
 
   async function getById(id) {
+    if (cardModel.get !== undefined) {
+      return cardModel.get(id);
+    }
+
     const cards = await getAll();
-    console.log(11, id, cards);
     let foundCard;
     cards.forEach((card) => {
       if (card.id === id) {

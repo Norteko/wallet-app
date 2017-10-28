@@ -39,17 +39,18 @@ class Card extends FileModel {
     return card;
   }
 
-  async update(card) {
-    const isDataValid = card && card.hasOwnProperty('cardNumber') && card.hasOwnProperty('balance');
+  async update(currentCard, updatedCard) {
+    const isDataValid = updatedCard &&
+      updatedCard.hasOwnProperty('cardNumber') && updatedCard.hasOwnProperty('balance');
 
     if (!isDataValid) {
-      throw new ApplicationError('Card data is invalid', 400);
+      throw new ApplicationError('Can\'t update card, card data is invalid', 400);
     }
 
     let cardForUpdate;
 
     this.dataSource.forEach((item) => {
-      if (item.id === card.id) {
+      if (item.id === currentCard.id) {
         cardForUpdate = item;
       }
     });
@@ -58,10 +59,10 @@ class Card extends FileModel {
       throw new ApplicationError('Card not found', 400);
     }
 
-    const updatedCard = Object.assign(cardForUpdate, card);
+    const savedCard = Object.assign(cardForUpdate, updatedCard);
 
     await this.saveUpdates();
-    return updatedCard;
+    return savedCard;
   }
 
   /**

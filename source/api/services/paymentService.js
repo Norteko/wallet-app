@@ -7,7 +7,7 @@ function updateCardBalance(card, diffrence) {
   return currentCard;
 }
 
-
+// TODO Более четко разделить списание и пополнение и в трансфере использвать вызов только уже этих методов
 module.exports = (repositories, ApplicationError) => {
   const {cardRepository, transactionRepository} = repositories;
 
@@ -27,7 +27,7 @@ module.exports = (repositories, ApplicationError) => {
       throw new ApplicationError('Not sufficient funds for the payment', 404);
     }
 
-    await cardRepository.update(updatedCard);
+    await cardRepository.update(currentCard, updatedCard);
 
     const transaction = await transactionRepository.add({
       cardId,
@@ -53,7 +53,7 @@ module.exports = (repositories, ApplicationError) => {
     const diffrence = sum;
     const updatedCard = updateCardBalance(currentCard, diffrence);
 
-    await cardRepository.update(updatedCard);
+    await cardRepository.update(currentCard, updatedCard);
 
     const transaction = await transactionRepository.add({
       cardId,
@@ -91,7 +91,7 @@ module.exports = (repositories, ApplicationError) => {
       throw new ApplicationError('Not sufficient funds for the payment', 404);
     }
 
-    await cardRepository.update(updatedCard);
+    await cardRepository.update(currentCard, updatedCard);
 
     const transaction = await transactionRepository.add({
       cardId,
@@ -104,7 +104,7 @@ module.exports = (repositories, ApplicationError) => {
     // Пополнение
     const updatedTargetCard = updateCardBalance(targetCard, currentSum);
 
-    await cardRepository.update(updatedTargetCard);
+    await cardRepository.update(targetCard, updatedTargetCard);
 
     await transactionRepository.add({
       cardId: targetCardId,

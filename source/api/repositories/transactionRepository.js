@@ -33,8 +33,11 @@ module.exports = (transactionModel, ApplicationError) => {
     return createdTransaction;
   }
 
-  async function getAllByCardId(id) {
-    const allTransaction = await transactionModel.getByCard(id);
+  async function getAllByCardId(cardId) {
+    if (transactionModel.getBy !== undefined) {
+      return transactionModel.getBy({cardId});
+    }
+    const allTransaction = await transactionModel.getByCard(cardId);
     return allTransaction;
   }
 

@@ -42,7 +42,7 @@ class FileModel extends Model {
   }
 
   async get(id) {
-    return this.dataSource.find(item => item.id === id);
+    return this.dataSource.find((item) => item.id === id);
   }
 
   /**

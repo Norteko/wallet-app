@@ -3,6 +3,7 @@ const Koa = require('koa');
 const serve = require('koa-static');
 const apiRouter = require('koa-router')();
 const presentationalRouter = require('koa-router')();
+const logger = require('libs/logger')('app');
 
 const mainRouter = require('koa-router')();
 const bodyParser = require('koa-bodyparser')();
@@ -36,7 +37,7 @@ async function start() {
     const startTime = new Date();
     await next();
     const ms = new Date() - startTime;
-    console.log(`${ctx.method} ${ctx.url} - ${ms}ms`);
+    logger.info(`${ctx.method} ${ctx.url} - ${ms}ms`);
   });
 
   // error handler
