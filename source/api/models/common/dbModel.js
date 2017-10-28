@@ -40,7 +40,7 @@ class DbModel extends Model {
 	 * @return {Number}
 	 * @private
 	 */
-  async _generateId() {
+  async generateId() {
     const data = await this._MongooseModel
       .find({})
       .sort({id: -1})
@@ -51,6 +51,9 @@ class DbModel extends Model {
   }
 
   async create(item) {
+    if (item.id === undefined) {
+      item.id = await this.generateId();
+    }
     await this._MongooseModel
       .create(item);
   }

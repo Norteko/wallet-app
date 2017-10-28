@@ -21,7 +21,7 @@ const ApplicationError = require('libs/application-error');
 
 
 async function start() {
-  const appModels = await models(modelConfig.fileSource);
+  const appModels = await models(modelConfig.dbSource);
   const appRepositories = await repositories(appModels, ApplicationError);
   const appService = await services(appRepositories, ApplicationError);
   const appApiRouter = await routes(appService, apiRouter);
