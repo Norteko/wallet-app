@@ -1,3 +1,8 @@
+public/*
+!public/assets/
+!public/fonts/
+!public/favicon.ico
+
 build/
 node_modules/
 .DS_Store
